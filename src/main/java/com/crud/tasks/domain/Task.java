@@ -1,8 +1,13 @@
 package com.crud.tasks.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity(name = "tasks")
+@Getter
+@NoArgsConstructor
 public class Task {
 
     @Id
@@ -19,20 +24,5 @@ public class Task {
         this.id = id;
         this.title = title;
         this.content = content;
-    }
-
-    public Task() {
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public String getContent() {
-        return this.content;
     }
 }
