@@ -1,8 +1,11 @@
 package com.crud.tasks.controller;
 
 import com.crud.tasks.domain.TrelloBoardDto;
+import com.crud.tasks.domain.TrelloCardDto;
+import com.crud.tasks.mapper.CreatedTrelloCard;
 import com.crud.tasks.trello.client.TrelloClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,14 +22,15 @@ public class TrelloController {
     private static final String KODILLA = "Kodilla";
 
     @RequestMapping(method = RequestMethod.GET, value = "getTrelloBoards")
-    public void getTrelloBoards() {
+    public List<TrelloBoardDto> getTrelloBoards() {
 
-        List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoards();
+        return trelloClient.getTrelloBoards();
+    }
 
-        trelloBoards.stream()
-                    .filter(board -> Optional.ofNullable(board.getId()).isPresent())
-                    .filter(board -> board.getName().contains(KODILLA))
-                    .forEach(trelloBoardDto -> System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName()));
 
+    @RequestMapping(method = RequestMethod.POST, value="createTrelloCard")
+    public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDto trelloCardDto){
+
+        return trelloClient.createNewCard(trelloCardDto);
     }
 }
