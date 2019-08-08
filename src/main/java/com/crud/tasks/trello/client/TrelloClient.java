@@ -30,15 +30,6 @@ public class TrelloClient {
     @Autowired
     private TrelloConfig trelloConfig;
 
-    private URI getTrelloBoardsURL(){
-
-        return UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "members/" + trelloConfig.getTrelloUsername() + "/boards")
-                .queryParam("key", trelloConfig.getTrelloAppKey())
-                .queryParam("token", trelloConfig.getTrelloAppToken())
-                .queryParam("fields", "name,id")
-                .queryParam("lists","all").build().encode().toUri();
-    }
-
     public List<TrelloBoardDto> getTrelloBoards(){
 
         URI url = getTrelloBoardsURL();
@@ -63,5 +54,14 @@ public class TrelloClient {
                 .queryParam("idList", trelloCardDto.getListId()).build().encode().toUri();
 
         return restTemplate.postForObject(url, null, CreatedTrelloCard.class);
+    }
+
+    private URI getTrelloBoardsURL(){
+
+        return UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "/members/" + trelloConfig.getTrelloUsername() + "/boards")
+                .queryParam("key", trelloConfig.getTrelloAppKey())
+                .queryParam("token", trelloConfig.getTrelloAppToken())
+                .queryParam("fields", "name,id")
+                .queryParam("lists","all").build().encode().toUri();
     }
 }
