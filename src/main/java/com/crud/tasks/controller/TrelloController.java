@@ -16,6 +16,7 @@ public class TrelloController {
 
     @Autowired
     private TrelloClient trelloClient;
+    private static final String KODILLA = "Kodilla";
 
     @RequestMapping(method = RequestMethod.GET, value = "getTrelloBoards")
     public void getTrelloBoards() {
@@ -24,7 +25,7 @@ public class TrelloController {
 
         trelloBoards.stream()
                     .filter(board -> Optional.ofNullable(board.getId()).isPresent())
-                    .filter(board -> board.getName().contains("Kodilla"))
+                    .filter(board -> board.getName().contains(KODILLA))
                     .forEach(trelloBoardDto -> System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName()));
 
     }
