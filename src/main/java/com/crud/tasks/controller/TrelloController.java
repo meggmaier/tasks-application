@@ -19,12 +19,14 @@ public class TrelloController {
 
     @Autowired
     private TrelloClient trelloClient;
+    private static final String KODILLA = "Kodilla";
 
     @RequestMapping(method = RequestMethod.GET, value = "getTrelloBoards")
     public List<TrelloBoardDto> getTrelloBoards() {
 
         return trelloClient.getTrelloBoards();
     }
+
 
     @RequestMapping(method = RequestMethod.POST, value="createTrelloCard")
     public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDto trelloCardDto){
