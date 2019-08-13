@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
 
@@ -92,13 +93,10 @@ public class TrelloClientTest {
     @Test
     public void shouldReturnEmptyList() throws URISyntaxException{
         //Given
-        URI uri = new URI("http://test.com");
-        when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);
-
-        TrelloBoardDto[] boardsResponse = restTemplate.getForObject(uri, TrelloBoardDto[].class);
+        when(restTemplate.getForObject(Mockito.any(URI.class), Mockito.eq(TrelloBoardDto[].class))).thenReturn(null);
 
         //When
-        List<TrelloBoardDto> expectedEmpty = Arrays.asList(ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));
+        List<TrelloBoardDto> expectedEmpty = trelloClient.getTrelloBoards();
 
         //Then
         assertEquals(0, expectedEmpty.size());
