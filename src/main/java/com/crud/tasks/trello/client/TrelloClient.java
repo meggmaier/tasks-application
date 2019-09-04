@@ -56,11 +56,12 @@ public class TrelloClient {
         return restTemplate.postForObject(url, null, CreatedTrelloCard.class);
     }
 
-    private URI trelloBoardsURL(){
+    private URI getTrelloBoardsURL(){
 
-        return UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "members/" + trelloUsername + "/boards")
-                .queryParam("key", trelloAppKey)
-                .queryParam("token", trelloAppToken)
-                .queryParam("fields", "name,id").build().encode().toUri();
+        return UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "/members/" + trelloConfig.getTrelloUsername() + "/boards")
+                .queryParam("key", trelloConfig.getTrelloAppKey())
+                .queryParam("token", trelloConfig.getTrelloAppToken())
+                .queryParam("fields", "name,id")
+                .queryParam("lists","all").build().encode().toUri();
     }
 }
