@@ -23,7 +23,8 @@ public class DbServiceTestSuite {
     @Autowired
     private TaskRepository repository;
 
-    @Autowired DbService dbService;
+    @Autowired
+    private DbService dbService;
 
     private Task task1;
     private Task task2;
