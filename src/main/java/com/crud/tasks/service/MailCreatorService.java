@@ -45,4 +45,11 @@ public class MailCreatorService {
         context.setVariable("application_functionality", functionality);
         return templateEngine.process("mail/created-trello-card-mail", context);
     }
+
+    public String buildInformationEmail(String message) {
+
+        Context context = new Context();
+        context.setVariable("message", message);
+        return templateEngine.process("mail/created-trello-card-mail", context);
+    }
 }
