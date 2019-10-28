@@ -1,5 +1,7 @@
 package com.crud.tasks.service;
 
+import com.crud.tasks.repository.TaskRepository;
+import com.crud.tasks.scheduler.EmailScheduler;
 import com.crud.tasks.trello.config.AdminConfig;
 import com.crud.tasks.trello.config.CompanyConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class MailCreatorService {
     @Qualifier("templateEngine")
     private TemplateEngine templateEngine;
 
+    @Autowired
+    private TaskRepository taskRepository;
+
     public String buildTrelloCardEmail(String message) {
 
         List<String> functionality = new ArrayList<>();
@@ -49,7 +54,15 @@ public class MailCreatorService {
     public String buildInformationEmail(String message) {
 
         Context context = new Context();
-        context.setVariable("message", message);
-        return templateEngine.process("mail/created-trello-card-mail", context);
+        context.setVariable("message", EmailScheduler.MESSAGE);
+        context.setVariable("title", EmailScheduler.SUBJECT);
+        context.setVariable("tasks_url", "https://meggmaier.github.io/");
+        context.setVariable("button", "Visit website");
+        context.setVariable("admin_name", adminConfig.getAdminName());
+        context.setVariable("size", taskRepository.count());
+        context.setVariable("is_singular", taskRepository.count() == 1);
+        context.setVariable("goodbye", "Sincerely, " + companyConfig.getName());
+        context.setVariable("company_details", companyConfig.getName() + ", email: " + companyConfig.getEmail() + ", phone: " + companyConfig.getPhone());
+        return templateEngine.process("mail/daily-info-mail", context);
     }
 }
