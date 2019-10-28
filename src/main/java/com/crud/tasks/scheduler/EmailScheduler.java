@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class EmailScheduler {
 
     public static final String SUBJECT = "Tasks: Once a day email";
-    public static final String MESSAGE = "Currently in database you got: ";
+    private static final String MESSAGE = "Currently in database you got: ";
 
     @Autowired
     private SimpleEmailService simpleEmailService;
