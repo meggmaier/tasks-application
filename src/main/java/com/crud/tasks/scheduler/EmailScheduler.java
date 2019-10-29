@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class EmailScheduler {
 
     public static final String SUBJECT = "Tasks: Once a day email";
-    private static final String MESSAGE = "Currently in database you got: ";
 
     @Autowired
     private SimpleEmailService simpleEmailService;
@@ -30,7 +29,7 @@ public class EmailScheduler {
         Mail mail = new Mail(
                 adminConfig.getAdminMail(),
                 SUBJECT,
-                mailCreatorService.buildInformationEmail(MESSAGE),
+                mailCreatorService.buildInformationEmail("Currently in database you got: "),
                 "");
 
         simpleEmailService.send(mail);
