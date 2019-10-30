@@ -27,6 +27,9 @@ public class TrelloService {
     @Autowired
     private SimpleEmailService emailService;
 
+    @Autowired
+    private MailCreatorService mailCreatorService;
+
     public List<TrelloBoardDto> fetchTrelloBoards(){
         return trelloClient.getTrelloBoards();
     }
@@ -38,7 +41,7 @@ public class TrelloService {
              emailService.send(new Mail(
                      adminConfig.getAdminMail(),
                      SUBJECT,
-                    "New Card: " + trelloCardDto.getName() + "has been created on your account.",
+                    mailCreatorService.buildTrelloCardEmail("New Card: " + trelloCardDto.getName() + "has been created on your account."),
                     "")));
 
         return newCard;

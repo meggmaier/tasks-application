@@ -1,29 +1,21 @@
 package com.crud.tasks.scheduler;
-
-import com.crud.tasks.domain.Mail;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class EmailSchedulerTestSuite {
 
+    @Autowired
+    EmailScheduler emailScheduler;
 
     @Test
-    public void shouldGiveSingular(){
-        long size = 1;
-        String task;
+    public void shouldGiveSingular() {
 
-        if (size == 1){
-            task = "task";
-        } else {
-            task = "tasks";
-        }
+        emailScheduler.sendInformationEmail();
 
-        Mail mail = new Mail(
-                "test@test.pl",
-                "Subject",
-                "Currently in database you got: " + size + " " + task + ".",
-                "");
-
-        System.out.println(mail.getMessage());
     }
 }
