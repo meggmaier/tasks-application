@@ -35,7 +35,6 @@ public class SimpleEmailService {
         }
     }
 
-
     private MimeMessagePreparator createMimeMessage(final Mail mail) {
         return mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
@@ -44,18 +43,5 @@ public class SimpleEmailService {
             messageHelper.setSubject(mail.getSubject());
             messageHelper.setText(mail.getMessage(), true);
         };
-    }
-    private SimpleMailMessage createMailMessage(final Mail mail){
-
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(mail.getMailTo());
-        mailMessage.setSubject(mail.getSubject());
-        mailMessage.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()));
-
-        if (!mail.getToCc().isEmpty()) {
-            mailMessage.setCc(mail.getToCc());
-        }
-
-        return mailMessage;
     }
 }
