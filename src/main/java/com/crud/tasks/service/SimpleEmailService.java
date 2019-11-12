@@ -17,9 +17,6 @@ public class SimpleEmailService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleEmailService.class);
 
     @Autowired
-    private MailCreatorService mailCreatorService;
-
-    @Autowired
     private JavaMailSender javaMailSender;
 
     public void send(final Mail mail){

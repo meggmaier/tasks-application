@@ -5,7 +5,6 @@ import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
 import com.crud.tasks.domain.Mail;
-import com.crud.tasks.trello.validator.TrelloValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
