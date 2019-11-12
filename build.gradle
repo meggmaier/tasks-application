@@ -34,4 +34,6 @@ dependencies {
 	//providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
+
 }
