@@ -2,6 +2,7 @@ package com.crud.tasks.scheduler;
 
 import com.crud.tasks.domain.Mail;
 import com.crud.tasks.repository.TaskRepository;
+import com.crud.tasks.service.MailCreatorService;
 import com.crud.tasks.service.SimpleEmailService;
 import com.crud.tasks.trello.config.AdminConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailScheduler {
 
-    private static final String SUBJECT = "Tasks: Once a day email";
+    public static final String SUBJECT = "Tasks: Once a day email";
 
     @Autowired
     private SimpleEmailService simpleEmailService;
 
     @Autowired
-    private TaskRepository taskRepository;
+    private MailCreatorService mailCreatorService;
 
     @Autowired
     private AdminConfig adminConfig;
@@ -25,19 +26,10 @@ public class EmailScheduler {
     @Scheduled(cron = "0 0 10 * * *")
     public void sendInformationEmail(){
 
-        long size = taskRepository.count();
-        String task;
-
-        if (size == 1){
-            task = "task";
-        } else {
-            task = "tasks";
-        }
-
         Mail mail = new Mail(
                 adminConfig.getAdminMail(),
                 SUBJECT,
-                "Currently in database you got: " + size + " " + task + ".",
+                mailCreatorService.buildInformationEmail("Currently in database you got: "),
                 "");
 
         simpleEmailService.send(mail);

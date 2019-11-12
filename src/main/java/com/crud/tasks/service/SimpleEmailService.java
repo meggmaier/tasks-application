@@ -31,32 +31,17 @@ public class SimpleEmailService {
 
         } catch (MailException e){
 
-            LOGGER.error("Failed to process email sending: ", e.getMessage(), e);
+            LOGGER.error("Failed to process email sending: {}", e.getMessage(), e);
         }
     }
 
-
     private MimeMessagePreparator createMimeMessage(final Mail mail) {
-
         return mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
 
             messageHelper.setTo(mail.getMailTo());
             messageHelper.setSubject(mail.getSubject());
-            messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+            messageHelper.setText(mail.getMessage(), true);
         };
-    }
-    private SimpleMailMessage createMailMessage(final Mail mail){
-
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(mail.getMailTo());
-        mailMessage.setSubject(mail.getSubject());
-        mailMessage.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()));
-
-        if (!mail.getToCc().isEmpty()) {
-            mailMessage.setCc(mail.getToCc());
-        }
-
-        return mailMessage;
     }
 }
